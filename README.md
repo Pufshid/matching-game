@@ -1,7 +1,5 @@
 # matching-game
-This is the final project for Udacity's Intro to Programming nanodegree
+This is a classic matching game, otherwise known as memory. Open cards one at a time and try to find the matching image. When all the cards are matched, the game is won!
 
-The animate.css file is used to choose different animations for the game
-
-# Instructions
-To play the game open the index.html file. 
+## Instructions
+To play the game open the `index.html` file. 
