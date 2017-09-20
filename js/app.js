@@ -9,6 +9,15 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+ /*These three variables set the initial sizes for the window and container,
+ as well as the minimum sizes for the container*/
+ var $window = $(window);
+ var $container = $('.container')
+ var minSize = {
+   w: 750,
+   h: 500
+ }
+
  /*List of all cards*/
 var originalDeck = $(".card").children();
 /*Global interval variable to be used in the timer functions*/
@@ -172,6 +181,38 @@ function stopTimer(){
   clearInterval(interval);
 }
 
+/*Function used to find what scale to use then fits the page to window*/
+function updateScale() {
+  var winWidth = $window.width();
+  var winHeight = $window.height();
+  var newScale = 1;
+  if (winWidth < minSize.w | winHeight < minSize.h){
+    if (winWidth/winHeight < minSize.w/minSize.h) {
+      newScale = winWidth / minSize.w;
+    } else {
+      newScale = winHeight / minSize.h;
+    }
+  }
+  $(".container").css('transform','scale('+newScale+','+newScale+')');
+  $(".container").center(false)
+}
+
+/*Creates a jquery function to auto re-center objects if false centers in the
+window size, if true is inputed centers in the parent*/
+jQuery.fn.center = function(parent) {
+    if (parent) {
+        parent = this.parent();
+    } else {
+        parent = window;
+    }
+    this.css({
+        "position": "absolute",
+        "top": ((($(parent).height() - this.outerHeight()) / 2) + $(parent).scrollTop() + "px"),
+        "left": ((($(parent).width() - this.outerWidth()) / 2) + $(parent).scrollLeft() + "px")
+    });
+return this;
+}
+
 /* When a card is clicked calls the other function to check for a match*/
 $(".card").click(function() {
   if ($(".seconds").text() === "00.0") {
@@ -205,6 +246,10 @@ $("button").click(function(){
   $(".card").css("opacity","1");
   fullReset(originalDeck);
 });
+/*When the window is resized, run the updateScale function*/
+$(window).resize(updateScale)
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
