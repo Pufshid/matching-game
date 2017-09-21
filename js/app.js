@@ -126,10 +126,9 @@ function moveCount () {
 intervals*/
 function stars ( number ) {
   var starList = $(".fa.fa-star");
-  var firstStar = 12;
-  var secondStar = 18;
-  var thirdStar = 30;
-  if (number === firstStar || number === secondStar || number === thirdStar){
+  var firstStar = 18;
+  var secondStar = 24;
+  if (number === firstStar || number === secondStar){
     starList.last().attr("class","fa fa-star-o")
   }
 };
@@ -146,8 +145,14 @@ function gameWon () {
 
 /*Produces the win screen message taking the number of stars and moves*/
 function winMessage () {
+  var starsLength = $(".fa.fa-star").length;
+  var starsStr = 'star'
+  if (starsLength > 1) {
+    starsStr = "stars"
+  }
+  console.log(starsStr);
   $(".modal-content p").text("You used "+$(".moves").text()+
-    " moves "+"in "+$(".minutes").text()+$(".seconds").text()+" and scored "+$(".fa.fa-star").length+" star(s).")
+    " moves "+"in "+$(".minutes").text()+$(".seconds").text()+" and scored "+starsLength+" "+starsStr+".")
 };
 
 /*This function starts the timer in the score panel then updates the html to
